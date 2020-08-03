@@ -36,7 +36,12 @@ mv bazelisk-linux-amd64 "${BAZEL_BIN}"
 chmod +x "${BAZEL_BIN}"
 
 git clone --depth 1 https://github.com/google/copybara.git
-"${BAZEL_BIN}" run //java/com/google/copybara copy.bara.sky \
-    "${GITHUB_WORKSPACE}"/chromium/src --folder-dir .
+
+mkdir -p "${GITHUB_WORKSPACE}"/gurl
+
+pushd copybara
+"${BAZEL_BIN}" run //java/com/google/copybara "${GITHUB_WORKSPACE}"/copy.bara.sky \
+    "${GITHUB_WORKSPACE}"/chromium/src --folder-dir "${GITHUB_WORKSPACE}"/gurl
+popd
 
 ls -la
