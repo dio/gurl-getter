@@ -40,7 +40,7 @@ git clone --depth 1 https://github.com/google/copybara.git
 mkdir -p "${GITHUB_WORKSPACE}"/gurl
 
 pushd copybara
-"${BAZEL_BIN}" run //java/com/google/copybara "${GITHUB_WORKSPACE}"/copy.bara.sky \
+"${BAZEL_BIN}" run //java/com/google/copybara -- "${GITHUB_WORKSPACE}"/copy.bara.sky \
     "${GITHUB_WORKSPACE}"/chromium/src --folder-dir "${GITHUB_WORKSPACE}"/gurl
 popd
 
