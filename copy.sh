@@ -27,13 +27,16 @@
 set -u
 set -e
 
-git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-pushd depot_tools
-export PATH=$PATH:`pwd`
-popd
-mkdir "${GITHUB_WORKSPACE}"/chromium
+# TODO(dio): Check checksum.
+# Prepare Bazel.
+curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.1.0/bazelisk-linux-amd64"
+mkdir -p "${GITHUB_WORKSPACE}"/bin
+BAZEL_BIN="${GITHUB_WORKSPACE}"/bin/bazel
+mv bazelisk-linux-amd64 "${BAZEL_BIN}"
+chmod +x "${BAZEL_BIN}"
 
-pushd "${GITHUB_WORKSPACE}"/chromium
-fetch --nohooks --no-history chromium
-popd
+git clone --depth 1 https://github.com/google/copybara.git
+"${BAZEL_BIN}" run //java/com/google/copybara copy.bara.sky \
+    "${GITHUB_WORKSPACE}"/chromium/src --folder-dir .
 
+ls -la

@@ -1,0 +1,51 @@
+origin = folder.origin()
+
+import_list = glob(
+    include = [
+        "AUTHORS",
+        "LICENSE",
+        "base/compiler_specific.h",
+        "base/containers/checked_iterators.h",
+        "base/containers/span.h",
+        "base/containers/util.h",
+        "base/macros.h",
+        "base/debug/leak_annotations.h",
+        "base/no_destructor.h",
+        "base/optional.h",
+        "base/stl_util.h",
+        "base/template_util.h",
+        "base/strings/*.cc",
+        "base/strings/*.h",
+        "base/third_party/icu/**",
+        "build/build_config.h",
+        "url/*.cc",
+        "url/*.h",
+        "url/third_party/mozilla/**",
+    ],
+    exclude = [
+        "url/url_idna_icu_alternatives*",
+    ],
+)
+
+destination_files = glob(
+    include = [
+        "base/**",
+        "build/**",
+        "url/**",
+        "AUTHORS",
+        "LICENSE",
+    ],
+    exclude = [
+        "**/BUILD",
+    ],
+)
+
+core.workflow(
+    name = "import",
+    origin = origin,
+    origin_files = import_list,
+    destination = folder.destination(),
+    destination_files = destination_files,
+    authoring = authoring.pass_thru("Dhi Aurrahman <dio@rockybars.com>"),
+    mode = "SQUASH",
+)
