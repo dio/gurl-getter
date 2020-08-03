@@ -35,5 +35,7 @@ mkdir "${GITHUB_WORKSPACE}"/chromium
 
 pushd "${GITHUB_WORKSPACE}"/chromium
 fetch --nohooks --no-history chromium
+ls -la
+pwd
 popd
 
